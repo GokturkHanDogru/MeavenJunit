@@ -72,6 +72,8 @@ public class Case1_RegisterUser {
         Thread.sleep(2000);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+
+
         //9. Fill details: Title, Password, Date of birth
         Thread.sleep(3000);
         WebElement title = driver.findElement(By.id("id_gender1"));
@@ -141,6 +143,9 @@ public class Case1_RegisterUser {
         //16. Verify that 'Logged in as username' is visible
         WebElement usernameControl=driver.findElement(By.xpath("(//li)[10]"));
         Assert.assertTrue(usernameControl.isDisplayed());
+
+
+
 
         //17. Click 'Delete Account' button
         WebElement deleteButton=driver.findElement(By.xpath("(//a[@style='color:brown;'])[2]"));

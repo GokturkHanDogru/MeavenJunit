@@ -46,5 +46,11 @@ public class Case7 {
         testCases.click();
 
         //5. Verify user is navigated to test cases page successfully
+
+        driver.navigate().back();
+        driver.navigate().forward();
+
+        System.out.println(driver.findElement(By.xpath("//h2//b")).isDisplayed());
     }
-}
+    }
+
