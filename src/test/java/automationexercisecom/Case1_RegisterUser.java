@@ -5,11 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
 
@@ -68,10 +66,11 @@ public class Case1_RegisterUser {
         //8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
         WebElement enterAccInfo = driver.findElement(By.xpath("(//div/h2)[1]"));
         Assert.assertTrue(enterAccInfo.isDisplayed());
-        driver.findElement(By.xpath("//div[@class=\"grippy-host\"]")).click();
         Thread.sleep(2000);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+        driver.findElement(By.xpath("//div[@class=\"grippy-host\"]")).click(); //Reklami gecmek icin yazdim.
+        Thread.sleep(2000);
+        //JavascriptExecutor js = (JavascriptExecutor) driver;
+        //js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
 
 
         //9. Fill details: Title, Password, Date of birth
@@ -95,7 +94,9 @@ public class Case1_RegisterUser {
 
 
         //JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+        //js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+
+
         //10. Select checkbox 'Sign up for our newsletter!'
         WebElement checkbox1=driver.findElement(By.id("newsletter"));
         checkbox1.click();
@@ -106,6 +107,9 @@ public class Case1_RegisterUser {
 
 
         //12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
         WebElement firstName=driver.findElement(By.id("first_name"));
         firstName.sendKeys("Tahsin");
         WebElement lastName=driver.findElement(By.id("last_name"));
@@ -121,6 +125,9 @@ public class Case1_RegisterUser {
         selectObject.selectByValue("Canada");
         WebElement state= driver.findElement(By.id("state"));
         state.sendKeys("Wiesbaden");
+
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
         WebElement city= driver.findElement(By.id("city"));
         city.sendKeys("Kostheim");
         WebElement zipcode= driver.findElement(By.id("zipcode"));
@@ -141,6 +148,8 @@ public class Case1_RegisterUser {
         continueButton.click();
 
         //16. Verify that 'Logged in as username' is visible
+        driver.navigate().back();
+        driver.navigate().forward();
         WebElement usernameControl=driver.findElement(By.xpath("(//li)[10]"));
         Assert.assertTrue(usernameControl.isDisplayed());
 
@@ -154,7 +163,7 @@ public class Case1_RegisterUser {
         //18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
         WebElement accDeleted=driver.findElement(By.cssSelector("h2[class='title text-center']"));
         Assert.assertTrue(accDeleted.isDisplayed());
-        continueButton.click();
+        driver.findElement(By.xpath("//a[@class=\"btn btn-primary\"]")).click();
 
 
     }

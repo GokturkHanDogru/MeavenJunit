@@ -6,11 +6,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Case8 {
     WebDriver driver;
@@ -44,11 +47,38 @@ public class Case8 {
         WebElement products = driver.findElement(By.xpath("//a[@href=\"/products\"]"));
         products.click();
 
+        driver.navigate().back();
+        driver.navigate().forward();
+
         //5. Verify user is navigated to ALL PRODUCTS page successfully
-         
+        WebElement allProducts = driver.findElement(By.xpath("//h2[@class=\"title text-center\"]"));
+        Assert.assertTrue(allProducts.isDisplayed());
+
         //6. The products list is visible
+        List<WebElement> urunListesi = driver.findElements(By.xpath("//div[@class=\"product-overlay\"]"));
+
+        for (int i = 0; i <urunListesi.size() ; i++) {
+
+            urunListesi = driver.findElements(By.xpath("//div[@class=\"product-overlay\"]"));
+            WebElement urun =urunListesi.get(i);
+            Assert.assertTrue(urun.isDisplayed());
+
+        }
+
         //7. Click on 'View Product' of first product
+
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+
+        driver.findElement(By.xpath("//a[@href=\"/product_details/1\"]")).click();
+
+
         //8. User is landed to product detail page
+        WebElement ilkUrun = driver.findElement(By.xpath("//h2[text()='Blue Top']"));
+        Assert.assertTrue(ilkUrun.isDisplayed());
+
         //9. Verify that  detail is visible: product name, category, price, availability, condition, brand
+        WebElement urunBilgi = driver.findElement(By.xpath("//div[@class=\"product-information\"]"));
+        Assert.assertTrue(urunBilgi.isDisplayed());
     }
 }
