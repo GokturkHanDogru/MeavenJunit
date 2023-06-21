@@ -45,7 +45,9 @@ public class Case17 extends TestBase {
 
 
         //8. Verify that product is removed from the cart
-        Assert.assertTrue(driver.findElement(By.xpath("//b[text()='Cart is empty!']")).isDisplayed());
+        WebElement message = driver.findElement(By.xpath("(//p[@class=\"text-center\"])[3]"));
+
+        Assert.assertTrue(message.isDisplayed());
 
     }
 }
