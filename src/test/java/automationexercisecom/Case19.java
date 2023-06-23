@@ -61,7 +61,15 @@ public class Case19 extends TestBase {
 
 
         //10. Click 'Signup / Login' button and submit login details
+        driver.findElement(By.xpath("(//a[@href=\"/login\"])[1]")).click();
+
+        driver.findElement(By.xpath("//input[@name=\"name\"]")).sendKeys("gokturk"+Keys.TAB+"abcgokturk@gmail.com"+Keys.TAB);
+        driver.findElement(By.xpath("(//button[@type=\"submit\"])[2]")).click();
+
+
         //11. Again, go to Cart page
+        driver.findElement(By.xpath("//i[@class=\"fa fa-shopping-cart\"]")).click();
+
         //12. Verify that those products are visible in cart after login as well
 //
     }
