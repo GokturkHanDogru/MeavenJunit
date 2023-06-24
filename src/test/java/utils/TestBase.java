@@ -1,5 +1,8 @@
 package utils;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -23,6 +26,10 @@ import java.util.List;
 
 public abstract class TestBase {
 
+    protected ExtentReports extentReports; //-->Raporlamayı başlatmak için kullanılan class
+    protected ExtentHtmlReporter extentHtmlReporter;//-->Raporu HTML formatında düzenler
+    protected ExtentTest extentTest;//--> Test adınlarına eklemek istediğimiz bilgileri bu class ile oluştururuz
+
     // Bu test base sinifina extends ttigimiz test classlarindan ulasabiliriz
    protected WebDriver driver;
 
@@ -36,6 +43,8 @@ public abstract class TestBase {
 
     @After
     public void tearDown() throws Exception {
+        extentReports = new ExtentReports();
+        extentReports.flush();
        // driver.quit();
     }
 
@@ -115,5 +124,21 @@ public abstract class TestBase {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    //Extent Report Methodu
+    public void extentReport(String browser,String reportName){
+        extentReports = new ExtentReports();
+        String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
+        String dosyaYolu = "testOutput/extentReports/extentReport"+tarih+".html";
+        extentHtmlReporter = new ExtentHtmlReporter(dosyaYolu);
+        extentReports.attachReporter(extentHtmlReporter);//-->HTML formatında raporlamayı başlatacak
+        //Raporda gözükmesini isteğimiz bilgiler için
+        extentReports.setSystemInfo("Browser",browser);
+        extentReports.setSystemInfo("Tester","Erol");
+        extentHtmlReporter.config().setDocumentTitle("Extent Report");
+        extentHtmlReporter.config().setReportName(reportName);
+
     }
 }
